@@ -1,8 +1,8 @@
 # Example [werf.io](https://werf.io) and golang 1.12
-> Lets try build web-server by golang via werf and
+> Lets try build web-server by golang via werf
 
 ## Build
-1. Install werf (I used 1.0.4-beta.4)
+1. [Install werf](https://github.com/flant/werf#install-werf) (I used 1.0.4-beta.4)
     ```bash
     $ curl -L https://dl.bintray.com/flant/werf/v1.0.1-beta.4/werf-linux-amd64-v1.0.1-beta.4 -o /tmp/werf
     $ chmod +x /tmp/werf
