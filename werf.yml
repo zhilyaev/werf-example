@@ -12,12 +12,9 @@ shell:
     - export GO111MODULE=on
     - go mod download
     - go build
-    - ls -la
   setup:
     - cd /go/src/app
-    - ls -la
     - chmod +x app
-
 git:
   - add: /
     to: /go/src/app
