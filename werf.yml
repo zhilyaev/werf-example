@@ -2,26 +2,25 @@ project: project
 configVersion: 1
 ---
 artifact: app
-from: golang:1.12.4-alpine
+from: golang:1.12-alpine
 shell:
   beforeInstall:
     - apk update
     - apk add bash ca-certificates git gcc g++ libc-dev
+  install:
     - cd /go/src/app
     - export GO111MODULE=on
     - go mod download
-  install:
     - go build
+    - ls -la
   setup:
     - cd /go/src/app
+    - ls -la
     - chmod +x app
 
 git:
   - add: /
     to: /go/src/app
-    stageDependencies:
-      install:
-        - "**/*.go"
 ---
 image: prod
 from: alpine:latest
