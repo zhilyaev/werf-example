@@ -1,5 +1,5 @@
-# Example werf.io and golang 1.12
-> Simple
+# Example [werf.io](https://werf.io) and golang 1.12
+> Lets try build web-server by golang via werf and
 
 ## Build
 1. Install werf (I used 1.0.4-beta.4)
