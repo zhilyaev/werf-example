@@ -1,5 +1,5 @@
 # Example werf.io and go
-> 
+> Simple
 
 ## Build
 1. Install werf (I used 1.0.1-beta)
