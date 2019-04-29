@@ -4,21 +4,21 @@
 ## Build
 1. Install werf (I used 1.0.4-beta.4)
     ```bash
-    curl -L https://dl.bintray.com/flant/werf/v1.0.1-beta.4/werf-linux-amd64-v1.0.1-beta.4 -o /tmp/werf
-    chmod +x /tmp/werf
-    sudo mv /tmp/werf /usr/local/bin/werf
+    $ curl -L https://dl.bintray.com/flant/werf/v1.0.1-beta.4/werf-linux-amd64-v1.0.1-beta.4 -o /tmp/werf
+    $ chmod +x /tmp/werf
+    $ sudo mv /tmp/werf /usr/local/bin/werf
     ```
 2. Git clone this repo
    ```bash
-   git clone https://github.com/zhilyaev/werf-example.git
+   $ git clone https://github.com/zhilyaev/werf-example.git
    ```
 3. Set --stages-storage default value using $WERF_STAGES_STORAGE param
     ```bash
-    export WERF_STAGES_STORAGE=:local
+    $ export WERF_STAGES_STORAGE=:local
     ```
 4. Main build 
-    ```bash 
-    werf build
+    ```bash
+    $ werf build
     ```
 5. Enjoy
     ```bash
@@ -42,11 +42,11 @@
 ## Run
 Run with werf:
 ```bash
-werf run prod --docker-options="-d -p 3000:3000"   
+$ werf run prod --docker-options="-d -p 3000:3000"   
 ```
 The command above run something like that:
 ```bash
-docker run -d -p 3000:3000 werf-stages-storage/project:a33d8a20716fcb2f749ee19443c0bf555b55ce8fce304431ca81153a2e53f7c5
+$ docker run -d -p 3000:3000 werf-stages-storage/project:a33d8a20716fcb2f749ee19443c0bf555b55ce8fce304431ca81153a2e53f7c5
 ```
 
 Try to connect
@@ -59,14 +59,47 @@ Hello, World!%
 ## Publish
 1. Start Docker registry locally
     ```bash
-    docker run -d -p 5000:5000 --restart=always --name registry registry:2
+    $ docker run -d -p 5000:5000 --restart=always --name registry registry:2
     ```
 2. Publish with werf:
     ```bash
-    werf images publish --images-repo localhost:5000/app --tag-git-branch master 
+    $ werf images publish --images-repo localhost:5000/app --tag-git-branch master 
     ```
 3. Try to connect
     ```bash
     $ curl -X GET localhost:5000/v2/_catalog                                                                                                                                                                                                                                                                     
     {"repositories":["app/prod"]}
      ``` 
+     
+### Docker-compose
+After publish step. You can start your docker-compose.yml
+   ```yaml
+    services:
+      app:
+        image: localhost:5000/app/prod:master
+        container_name: app
+        ports:
+          - 3000:3000
+   ```
+   ```
+    $ docker-compose up                                                                                                                                                   1 ↵
+    Pulling app (localhost:5000/app/prod:master)...
+    master: Pulling from app/prod
+    bdf0201b3a05: Already exists
+    e193416ac5ad: Already exists
+    efe70db182e9: Already exists
+    Digest: sha256:77311472469aed0d755957465ce6e928a43f042aa30ef67cfc58fc21694c2585
+    Status: Downloaded newer image for localhost:5000/app/prod:master
+    Creating app ... done
+    Attaching to app
+    app    | 
+    app    |    ____    __
+    app    |   / __/___/ /  ___
+    app    |  / _// __/ _ \/ _ \
+    app    | /___/\__/_//_/\___/ v4.1.2
+    app    | High performance, minimalist Go web framework
+    app    | https://echo.labstack.com
+    app    | ____________________________________O/_______
+    app    |                                     O\
+    app    | ⇨ http server started on [::]:3000
+   ```
